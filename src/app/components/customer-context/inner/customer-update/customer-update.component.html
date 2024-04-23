@@ -1,0 +1,44 @@
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <mat-progress-bar *ngIf="loading" mode="determinate" value="{{uploadRate | async}}"></mat-progress-bar>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<form [formGroup]="form" (ngSubmit)="updateCustomer()">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input formControlName="fullName" type="text" matInput placeholder="Ex. John Silva">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Address</mat-label>
+          <input formControlName="address" type="text" matInput placeholder="Ex. Colombo">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Salary</mat-label>
+          <input formControlName="salary" type="number" matInput placeholder="Ex. 500000">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <input formControlName="avatar" (change)="onChangeFile($event)" type="file">
+      </div>
+      <br>
+      <br>
+      <div class="col-12 wrapper">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: end;">
+          <button [disabled]="form.invalid || loading" mat-raised-button color="primary" type="submit">Save Customer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

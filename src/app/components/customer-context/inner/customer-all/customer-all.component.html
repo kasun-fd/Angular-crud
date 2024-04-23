@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <br>
+      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <br>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Salary</th>
+          <th>Avatar</th>
+          <th>Option</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let temp of customers; index as num">
+          <td>
+            <div class="context">{{num+1}}</div>
+          </td>
+          <td>
+            <div class="context">{{temp?.data.fullName}}</div>
+            </td>
+          <td>
+            <div class="context">{{temp?.data.address}}</div>
+            </td>
+          <td>
+            <div class="context">{{temp?.data.salary | currency:'LKR'}}</div>
+            </td>
+          <td>
+<!--            <div class="context">-->
+            <img [src]="temp?.data.avatar" alt="{{temp?.data.fullName}}" style="border-radius: 50px; width: 50px; height: 50px; object-fit: cover">
+<!--            </div>-->
+            </td>
+          <td>
+            <div class="context">
+              <button (click)="deleteCustomer(temp?.id,temp?.data.avatar)" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+              &nbsp;
+              <button routerLink="/dashboard/customers/update/{{temp?.id}}"  mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+              <mat-icon>edit</mat-icon>
+            </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
