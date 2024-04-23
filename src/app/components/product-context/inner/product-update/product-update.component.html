@@ -1,1 +1,44 @@
-<p>product-update works!</p>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <mat-progress-bar *ngIf="loading" mode="determinate" value="{{uploadRate | async}}"></mat-progress-bar>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<form [formGroup]="form" (ngSubmit)="updateProduct()">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Description</mat-label>
+          <input formControlName="des" type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Qty on hand</mat-label>
+          <input formControlName="qty" type="number" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Unit Price</mat-label>
+          <input formControlName="price" type="number" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4 wrapper">
+        <input formControlName="image" (change)="onChangeFile($event)" type="file">
+      </div>
+      <br>
+      <br>
+      <div class="col-12 wrapper">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: end;">
+          <button [disabled]="form.invalid || loading" mat-raised-button color="primary" type="submit">Save Product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
