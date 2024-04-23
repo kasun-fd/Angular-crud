@@ -1,1 +1,53 @@
-<p>product-all works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <br>
+      <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+      <br>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Description</th>
+          <th>Qty on hand</th>
+          <th>Unit price</th>
+          <th>Product image</th>
+          <th>Option</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let temp of products; index as num">
+          <td>
+            <div class="context">{{num+1}}</div>
+          </td>
+          <td>
+            <div class="context">{{temp?.data.des}}</div>
+          </td>
+          <td>
+            <div class="context">{{temp?.data.qty}}</div>
+          </td>
+          <td>
+            <div class="context">{{temp?.data.price | currency:'LKR'}}</div>
+          </td>
+          <td>
+            <!--            <div class="context">-->
+            <img [src]="temp?.data.image" alt="{{temp?.data.des}}" style="border-radius: 50px; width: 50px; height: 50px; object-fit: cover">
+            <!--            </div>-->
+          </td>
+          <td>
+            <div class="context">
+              <button (click)="deleteProduct(temp?.id,temp?.data.image)" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+              &nbsp;
+              <button routerLink="/dashboard/products/update/{{temp?.id}}"  mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
