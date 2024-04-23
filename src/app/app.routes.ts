@@ -9,6 +9,7 @@ import {ProductContextComponent} from "./components/product-context/product-cont
 import {ProductNewComponent} from "./components/product-context/inner/product-new/product-new.component";
 import {ProductUpdateComponent} from "./components/product-context/inner/product-update/product-update.component";
 import {ProductAllComponent} from "./components/product-context/inner/product-all/product-all.component";
+import {OrderContextComponent} from "./components/order-context/order-context.component";
 
 export const routes: Routes = [
   {path:'', redirectTo:'/dashboard/home', pathMatch:'full'},
@@ -26,6 +27,7 @@ export const routes: Routes = [
           {path:'new', component: ProductNewComponent},
           {path: 'update/:id', component: ProductUpdateComponent},
           {path: 'list', component: ProductAllComponent}
-        ]}
+        ]},
+      {path: 'orders', component:OrderContextComponent}
     ]}
 ];

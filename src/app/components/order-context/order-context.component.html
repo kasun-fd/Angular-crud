@@ -1,0 +1,143 @@
+<br>
+<br>
+<br>
+
+<div class="container">
+  <div class="row">
+    <form [formGroup]="form" (ngSubmit)="addCart()">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Select Customer</mat-label>
+            <mat-select formControlName="customerName" #selectedCustomer (selectionChange)="customerSelect(selectedCustomer)">
+              <mat-option *ngFor="let temp of customerData" value="{{temp?.id}}">{{ temp?.data.fullName }}</mat-option>
+<!--              <mat-option value="two">Second option</mat-option>-->
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Address</mat-label>
+            <input
+                   matInput
+                   disabled
+                   required
+                   value="{{customerAllData?.address}}"
+            >
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Salary</mat-label>
+            <input matInput
+                   disabled
+                   required
+                   value="{{customerAllData?.salary}}"
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <br>
+    </div>
+    <!--    ===========================================================    -->
+
+   <div class="col-12">
+     <hr>
+   </div>
+
+    <!--    ===========================================================    -->
+
+    <div class="col-12">
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Select Product</mat-label>
+            <mat-select formControlName="productName">
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Qty On Hand</mat-label>
+            <input matInput
+                   disabled
+                   required>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Unit Price</mat-label>
+            <input matInput
+                   disabled
+                   required>
+          </mat-form-field>
+        </div>
+      </div>
+      <br>
+    </div>
+    <!--    ===========================================================    -->
+
+    <div class="col-12">
+      <hr>
+    </div>
+
+    <!--    ===========================================================    -->
+    <div class="col-12">
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+          <mat-form-field style="width: 100%" appearance="outline">
+            <mat-label>Qty</mat-label>
+            <input matInput
+                   formControlName="qty"
+                   type="number"
+                   required>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+          <button [disabled]="form.invalid" style="width: 100%; height: 50px" mat-raised-button color="primary" type="submit">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+    </form>
+    <!--    ===========================================================    -->
+
+    <div class="col-12">
+      <hr>
+    </div>
+
+    <!--    ===========================================================    -->
+    <div class="col-12">
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Description</th>
+          <th>Qty</th>
+          <th>Unit Price</th>
+          <th>Total Cost</th>
+          <th>Option</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, est.</td>
+          <td>Lorem ipsum.</td>
+          <td>Lorem ipsum.</td>
+          <td>Lorem ipsum.</td>
+          <td>Lorem ipsum.</td>
+          <td>Lorem ipsum.</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
