@@ -96,6 +96,7 @@ export class ProductUpdateComponent {
         })
 
       })
+    //   test
     }).catch(er=>{
       console.log(er);
       this.loading = false;
