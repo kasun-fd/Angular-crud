@@ -5,6 +5,10 @@ import {CustomerContextComponent} from "./components/customer-context/customer-c
 import {CustomerNewComponent} from "./components/customer-context/inner/customer-new/customer-new.component";
 import {CustomerUpdateComponent} from "./components/customer-context/inner/customer-update/customer-update.component";
 import {CustomerAllComponent} from "./components/customer-context/inner/customer-all/customer-all.component";
+import {ProductContextComponent} from "./components/product-context/product-context.component";
+import {ProductNewComponent} from "./components/product-context/inner/product-new/product-new.component";
+import {ProductUpdateComponent} from "./components/product-context/inner/product-update/product-update.component";
+import {ProductAllComponent} from "./components/product-context/inner/product-all/product-all.component";
 
 export const routes: Routes = [
   {path:'', redirectTo:'/dashboard/home', pathMatch:'full'},
@@ -16,6 +20,12 @@ export const routes: Routes = [
           {path:'new', component:CustomerNewComponent},
           {path:'update/:id', component:CustomerUpdateComponent},
           {path:'list', component:CustomerAllComponent}
+        ]},
+      {path:'products', component:ProductContextComponent, children:[
+          {path: '', redirectTo: '/dashboard/products/new', pathMatch: 'full'},
+          {path:'new', component: ProductNewComponent},
+          {path: 'update/:id', component: ProductUpdateComponent},
+          {path: 'list', component: ProductAllComponent}
         ]}
     ]}
 ];
