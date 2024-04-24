@@ -10,6 +10,7 @@ import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {AsyncPipe, CurrencyPipe, NgForOf, NgIf} from "@angular/common";
 import {Observable} from "rxjs";
 import {MatProgressBar} from "@angular/material/progress-bar";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-order-context',
@@ -38,6 +39,7 @@ export class OrderContextComponent implements OnInit{
   constructor(
     private storage:AngularFireStorage,
     private db:AngularFirestore,
+    private scackBar:MatSnackBar
   ) {
   }
 
@@ -61,6 +63,8 @@ export class OrderContextComponent implements OnInit{
 
   ordersData:any[] = [];
 
+  orderTotalCost:any[] = [];
+
   ngOnInit(): void {
     this.db.collection('customers').get().subscribe(querySnapShot=>{
       querySnapShot.forEach(doc=>{
@@ -80,15 +84,6 @@ export class OrderContextComponent implements OnInit{
   }
 
   order:any;
-
-  arrayTotal(){
-    for (let i = 0; i < this.ordersData.length; i++) {
-      for (let j = 0; j < this.ordersData[i].totalCost; j++) {
-        this.grandTotal += this.ordersData[i].totalCost;
-      }
-    }
-    console.log(this.grandTotal);
-  }
 
   addCart(){
     this.getQty = this.form.value.qty;
@@ -113,7 +108,37 @@ export class OrderContextComponent implements OnInit{
       document.documentElement.scrollTop = 0;
       this.tableMain = true;
       this.loadTable();
+      this.grandTotal = 0;
       this.arrayTotal();
+  }
+
+  placeOrder() {
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.grandTotal = 0;
+    this.ordersData = [];
+
+    // this.loading = true;
+
+
+    for (let item of this.ordersData) {
+      const myObject = {
+        customerName:item.customerName,
+        customerAddress:item.customerAddress,
+        des:item.des,
+        qty:item.qty,
+        unitPrice:item.unitPrice,
+        totalCost:item.totalCost
+      };
+      this.db.collection('orders').add(myObject)
+    }
+  confirm('done')
+  }
+
+  arrayTotal(){
+    for (let argument of this.ordersData) {
+      this.grandTotal += argument.totalCost;
+    }
   }
 
   loadTable(){
@@ -127,32 +152,30 @@ export class OrderContextComponent implements OnInit{
       this.tableMain = false;
       this.grandTotal = 0;
     }
+    this.grandTotal = 0;
+    this.arrayTotal()
   }
 
-  getDataByID(id: any, type:any) {
-    return this.db.collection(type).doc(id).ref.get().then((doc) => {
-        if (doc.exists) {
-          this.customerAllData = doc.data()
-        } else {
-          console.log('No such document!');
-        }
-
-    });
+  async getDataByID(id: any, type: any) {
+    const doc = await this.db.collection(type).doc(id).ref.get();
+    if (doc.exists) {
+      this.customerAllData = doc.data();
+    } else {
+      console.log('No such document!');
+    }
   }
 
-  getProductDataByID(id: any, type:any) {
-    return this.db.collection(type).doc(id).ref.get().then((doc) => {
-      if (doc.exists) {
-        this.productAllData = doc.data()
-      } else {
-        console.log('No such document!');
-      }
-
-    });
+  async getProductDataByID(id: any, type: any) {
+    const doc = await this.db.collection(type).doc(id).ref.get();
+    if (doc.exists) {
+      this.productAllData = doc.data();
+    } else {
+      console.log('No such document!');
+    }
   }
 
   customerSelect(text:any){
-    this.getDataByID(text.value,'customers')
+    this.getDataByID(text.value, 'customers')
   }
 
   productSelect(text:any){
