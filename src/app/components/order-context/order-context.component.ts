@@ -11,6 +11,7 @@ import {AsyncPipe, CurrencyPipe, NgForOf, NgIf} from "@angular/common";
 import {Observable} from "rxjs";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {IdGeneratorService} from "../../services/id-generator.service";
 
 @Component({
   selector: 'app-order-context',
@@ -39,7 +40,8 @@ export class OrderContextComponent implements OnInit{
   constructor(
     private storage:AngularFireStorage,
     private db:AngularFirestore,
-    private scackBar:MatSnackBar
+    private snackBar:MatSnackBar,
+    private generateId:IdGeneratorService
   ) {
   }
 
@@ -112,28 +114,48 @@ export class OrderContextComponent implements OnInit{
       this.arrayTotal();
   }
 
-  placeOrder() {
+  async placeOrder() {
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top: 0, behavior: 'smooth'});
     this.grandTotal = 0;
+
+    this.loading = true;
+
+    await this.addArrayDataToFirestore(this.ordersData).then(r => {
+      this.loading = false;
+      this.tableMain = false;
+
+      this.snackBar.open('Order was Placed!','Close',{
+        direction:'ltr',
+        duration:4000,
+        horizontalPosition:'start',
+        verticalPosition:'bottom'
+      })
+
+    })
+
     this.ordersData = [];
-
-    // this.loading = true;
-
-
-    for (let item of this.ordersData) {
-      const myObject = {
-        customerName:item.customerName,
-        customerAddress:item.customerAddress,
-        des:item.des,
-        qty:item.qty,
-        unitPrice:item.unitPrice,
-        totalCost:item.totalCost
-      };
-      this.db.collection('orders').add(myObject)
-    }
-  confirm('done')
   }
+    async addArrayDataToFirestore(dataArray: any[]) {
+    for (let i = 0; i < dataArray.length; i++) {
+      let object = {
+        customerName:dataArray[i].customerName,
+        customerAddress:dataArray[i].customerAddress,
+        des:dataArray[i].des,
+        qty:dataArray[i].qty,
+        unitPrice:dataArray[i].unitPrice,
+        totalCost:dataArray[i].totalCost
+      }
+      try {
+        // Use add() to generate a unique document ID
+        await this.db.collection('orders').add(object);
+        console.log('placed');
+      } catch (error) {
+        console.error('Error adding document:', error);
+      }
+    }
+  }
+
 
   arrayTotal(){
     for (let argument of this.ordersData) {
