@@ -89,6 +89,7 @@ export class ProductUpdateComponent {
             horizontalPosition:'start',
             direction:'ltr'
           })
+          this.form.reset();
           this.loading = false;
         }).catch(er=>{
           console.log(er);

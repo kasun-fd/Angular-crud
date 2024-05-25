@@ -53,6 +53,18 @@ export class CustomerAllComponent implements OnInit{
     if (confirm('Are You Sure?')){
       this.db.collection('customers').doc(id).delete();
       this.storage.storage.refFromURL(avatar).delete();
+
+      this.customers = [];
+
+      this.loading = true;
+      this.db.collection('customers').get().subscribe(querySnapShot=>{
+        querySnapShot.forEach(doc=>{
+          this.customers.push({id:doc.id, data:doc.data()});
+          this.loading = false;
+          // console.log(this.customers)
+        })
+      });
+
     }
   }
 

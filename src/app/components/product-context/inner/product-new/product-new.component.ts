@@ -95,6 +95,7 @@ export class ProductNewComponent {
             horizontalPosition:"left",
             direction:'ltr'
           })
+          this.form.reset();
         }).catch(er=>{
           console.log(er)
           this.loading = false;

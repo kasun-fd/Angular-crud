@@ -48,6 +48,18 @@ export class ProductAllComponent implements OnInit{
     if(confirm('Are You Sure?')){
       this.db.collection('products').doc(id).delete();
       this.storage.storage.refFromURL(image).delete();
+
+      this.products = [];
+
+      this.loading = true;
+
+      this.db.collection('products').get().subscribe(querySnapShot=>{
+        querySnapShot.forEach(doc=>{
+          this.products.push({id:doc.id, data:doc.data()});
+          this.loading = false;
+        })
+      })
+
     }
   }
 

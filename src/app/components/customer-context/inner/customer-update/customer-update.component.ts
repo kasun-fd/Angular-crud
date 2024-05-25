@@ -84,13 +84,14 @@ export class CustomerUpdateComponent {
 
         customerRef.update(customer).then((docRef)=>{
 
-          this.snackBarService.open('Customer Updates!','Close',{
+          this.snackBarService.open('Customer Updated!','Close',{
             duration:5000,
             verticalPosition:'bottom',
             horizontalPosition:'start',
             direction:'ltr'
           })
           this.loading = false;
+          this.form.reset();
         }).catch(er=>{
           console.log(er)
           this.loading = false;
